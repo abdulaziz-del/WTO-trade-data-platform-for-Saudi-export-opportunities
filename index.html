@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>منصة WTO — فرص التصدير السعودية</title>
+<style>
+:root{--bg:#0f1117;--bg2:#161b22;--bg3:#1c2333;--bg4:#21262d;--b1:#30363d;--b2:#444c56;--t1:#e6edf3;--t2:#8b949e;--t3:#6e7681;--green:#3fb950;--green2:#238636;--blue:#58a6ff;--amber:#d29922;--red:#f85149;--purple:#a371f7;--teal:#39d353;--radius:8px;--shadow:0 2px 12px rgba(0,0,0,.4)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;font-size:14px;background:var(--bg);color:var(--t1);min-height:100vh}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:inherit;font-size:13px;border:none;outline:none;transition:all .15s}
+input,select{font-family:inherit;font-size:13px;background:var(--bg4);border:1px solid var(--b1);color:var(--t1);border-radius:var(--radius);padding:7px 10px;outline:none}
+input:focus,select:focus{border-color:var(--blue)}
+select option{background:var(--bg4)}
+
+/* Layout */
+.shell{display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-left:1px solid var(--b1);display:flex;flex-direction:column;padding:16px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--b1);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.content{flex:1;padding:20px;overflow-y:auto}
+
+/* Sidebar */
+.sidebar-brand{padding:0 16px 16px;border-bottom:1px solid var(--b1);margin-bottom:8px}
+.brand-logo{width:36px;height:36px;background:linear-gradient(135deg,#0f6e56,#1d9e75);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:8px}
+.brand-name{font-size:13px;font-weight:600;color:var(--t1)}
+.brand-sub{font-size:10px;color:var(--t3);margin-top:2px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:9px 16px;cursor:pointer;font-size:13px;color:var(--t2);transition:all .15s;border-right:2px solid transparent}
+.nav-item:hover{background:var(--bg3);color:var(--t1)}
+.nav-item.active{background:var(--bg3);color:var(--green);border-right-color:var(--green);font-weight:500}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.nav-badge{margin-right:auto;background:var(--red);color:#fff;font-size:9px;padding:1px 5px;border-radius:8px}
+
+/* Topbar */
+.topbar-title{font-size:15px;font-weight:600}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:500}
+.badge-green{background:rgba(63,185,80,.15);color:var(--green)}
+.badge-blue{background:rgba(88,166,255,.15);color:var(--blue)}
+.badge-amber{background:rgba(210,153,34,.15);color:var(--amber)}
+.badge-red{background:rgba(248,81,73,.15);color:var(--red)}
+.badge-purple{background:rgba(163,113,247,.15);color:var(--purple)}
+.badge-tbt{background:rgba(88,166,255,.15);color:var(--blue)}
+.badge-sps{background:rgba(63,185,80,.15);color:var(--green)}
+
+/* Cards */
+.card{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:600;color:var(--t1)}
+
+/* Metrics */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.metric{background:var(--bg2);border:1px solid var(--b1);border-radius:var(--radius);padding:14px}
+.metric-label{font-size:11px;color:var(--t3);margin-bottom:4px}
+.metric-value{font-size:24px;font-weight:700;color:var(--t1)}
+.metric-sub{font-size:11px;color:var(--t3);margin-top:2px}
+.metric-sub.green{color:var(--green)}
+.metric-sub.amber{color:var(--amber)}
+
+/* Two column */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+
+/* Buttons */
+.btn{padding:7px 14px;border-radius:var(--radius);font-size:12px;font-weight:500}
+.btn-primary{background:var(--green2);color:#fff}
+.btn-primary:hover{background:#2ea043}
+.btn-secondary{background:var(--bg4);color:var(--t1);border:1px solid var(--b1)}
+.btn-secondary:hover{border-color:var(--b2);background:var(--bg3)}
+.btn-ai{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff;padding:8px 16px}
+.btn-ai:hover{opacity:.9}
+.btn-danger{background:rgba(248,81,73,.15);color:var(--red);border:1px solid rgba(248,81,73,.3)}
+.btn-danger:hover{background:rgba(248,81,73,.25)}
+
+/* Lists */
+.list-item{padding:10px 12px;border:1px solid var(--b1);border-radius:var(--radius);margin-bottom:6px;cursor:pointer;transition:border-color .15s}
+.list-item:hover{border-color:var(--b2);background:var(--bg3)}
+.list-item.selected{border-color:var(--blue);background:rgba(88,166,255,.05)}
+.item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
+.item-title{font-size:13px;font-weight:500;color:var(--t1);line-height:1.4}
+.item-meta{font-size:11px;color:var(--t3);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+/* Score bar */
+.score-bar{width:100%;height:3px;background:var(--bg4);border-radius:2px;margin-top:6px;overflow:hidden}
+.score-fill{height:100%;border-radius:2px;transition:width .4s}
+
+/* Detail panel */
+.detail-panel{background:var(--bg3);border:1px solid var(--b1);border-radius:var(--radius);padding:16px;font-size:13px;line-height:1.7;color:var(--t2)}
+.detail-panel h3{color:var(--t1);font-size:13px;font-weight:600;margin:12px 0 6px;border-bottom:1px solid var(--b1);padding-bottom:4px}
+.detail-panel h3:first-child{margin-top:0}
+.ai-output{white-space:pre-wrap;font-size:12px;line-height:1.8}
+
+/* Filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.filters input,.filters select{flex:1;min-width:120px;max-width:200px}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{text-align:right;font-weight:500;color:var(--t2);padding:8px;border-bottom:1px solid var(--b1);white-space:nowrap;font-size:11px}
+.tbl td{padding:8px;border-bottom:1px solid rgba(48,54,61,.5);color:var(--t1);vertical-align:middle}
+.tbl tr:hover td{background:var(--bg3)}
+.tbl-good{color:var(--green);font-weight:600}
+.tbl-mid{color:var(--amber);font-weight:600}
+.tbl-bad{color:var(--red);font-weight:600}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--b1);margin-bottom:16px}
+.tab{padding:8px 16px;font-size:13px;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.tab:hover{color:var(--t1)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* Pages */
+.page{display:none}
+.page.active{display:block}
+
+/* Pagination */
+.pager{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}
+.pager button{padding:5px 12px;border-radius:var(--radius);font-size:12px;background:var(--bg4);color:var(--t1);border:1px solid var(--b1)}
+.pager button:hover{border-color:var(--b2)}
+.pager button:disabled{opacity:.4;cursor:not-allowed}
+.pager-info{font-size:12px;color:var(--t3)}
+
+/* Loading */
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--b1);border-top-color:var(--green);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;padding:40px;color:var(--t3)}
+.empty-icon{font-size:32px;opacity:.3;margin-bottom:8px}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
+
+/* Responsive */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .metrics{grid-template-columns:1fr 1fr}
+  .two-col{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .metrics{grid-template-columns:1fr}
+  .content{padding:12px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">🌐</div>
+      <div class="brand-name">منصة WTO</div>
+      <div class="brand-sub">فرص التصدير السعودية</div>
+    </div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)">
+      <span class="nav-icon">🏠</span> لوحة التحكم
+    </div>
+    <div class="nav-item" onclick="showPage('opportunities',this)">
+      <span class="nav-icon">⭐</span> الفرص
+      <span class="nav-badge" id="opp-badge">7</span>
+    </div>
+    <div class="nav-item" onclick="showPage('notifications',this)">
+      <span class="nav-icon">🔔</span> الإشعارات
+      <span class="nav-badge" id="notif-badge">—</span>
+    </div>
+    <div class="nav-item" onclick="showPage('tariffs',this)">
+      <span class="nav-icon">📊</span> التعريفات
+    </div>
+    <div class="nav-item" onclick="showPage('search',this)">
+      <span class="nav-icon">🔍</span> بحث WTO
+    </div>
+    <div style="flex:1"></div>
+    <div class="nav-item" onclick="showPage('settings',this)">
+      <span class="nav-icon">⚙️</span> الإعدادات
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="dot"></div>
+        <div class="topbar-title" id="page-title">لوحة التحكم</div>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-green" id="api-status">جاري الاتصال...</span>
+        <button class="btn btn-secondary" onclick="doRefresh()">🔄 تحديث</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ══ DASHBOARD ══ -->
+      <div class="page active" id="page-dashboard">
+        <div class="metrics" id="dash-metrics">
+          <div class="metric"><div class="metric-label">الإشعارات</div><div class="metric-value" id="m-notifs">—</div><div class="metric-sub">TBT + SPS</div></div>
+          <div class="metric"><div class="metric-label">مفتوحة للتعليق</div><div class="metric-value" id="m-open">—</div><div class="metric-sub amber">تتطلب مراجعة</div></div>
+          <div class="metric"><div class="metric-label">الفرص</div><div class="metric-value" id="m-opps">—</div><div class="metric-sub green">للمصدرين السعوديين</div></div>
+          <div class="metric"><div class="metric-label">أسواق مرصودة</div><div class="metric-value">18</div><div class="metric-sub">دولة عضو WTO</div></div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">⭐ أعلى فرص التصدير</div>
+              <button class="btn btn-secondary" onclick="showPage('opportunities',document.querySelector('[onclick*=opportunities]'))">عرض الكل</button>
+            </div>
+            <div id="dash-opps"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🔔 آخر إشعارات ePing</div>
+              <button class="btn btn-secondary" onclick="showPage('notifications',document.querySelector('[onclick*=notifications]'))">عرض الكل</button>
+            </div>
+            <div id="dash-notifs"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">📈 التعريفات على المنتجات السعودية الرئيسية</div></div>
+          <div style="overflow-x:auto">
+            <table class="tbl" id="dash-tariff-table">
+              <thead><tr><th>المنتج</th><th>HS</th><th>الصين</th><th>الهند</th><th>EU</th><th>USA</th><th>اليابان</th></tr></thead>
+              <tbody id="dash-tariff-body"><tr><td colspan="7" style="text-align:center;color:var(--t3)"><div class="spinner"></div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ OPPORTUNITIES ══ -->
+      <div class="page" id="page-opportunities">
+        <div class="filters">
+          <input id="opp-search" placeholder="بحث..." oninput="filterOpps()">
+          <select id="opp-country" onchange="filterOpps()">
+            <option value="">كل الدول</option>
+            <option>الصين</option><option>الهند</option><option>الاتحاد الأوروبي</option>
+            <option>الولايات المتحدة</option><option>اليابان</option><option>كوريا</option>
+          </select>
+          <select id="opp-priority" onchange="filterOpps()">
+            <option value="">كل الأولويات</option>
+            <option>حرج</option><option>عالي</option><option>متوسط</option>
+          </select>
+          <button class="btn btn-secondary" onclick="filterOpps()">تصفية</button>
+        </div>
+        <div class="two-col">
+          <div>
+            <div id="opp-list"><div class="empty-state"><div class="spinner"></div></div></div>
+          </div>
+          <div>
+            <div id="opp-detail" class="detail-panel" style="min-height:200px">
+              <div class="empty-state"><div class="empty-icon">⭐</div><div>اختر فرصة للتفاصيل</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ NOTIFICATIONS ══ -->
+      <div class="page" id="page-notifications">
+        <div class="filters">
+          <input id="notif-search" placeholder="بحث في الإشعارات..." oninput="filterNotifs()">
+          <select id="notif-type" onchange="filterNotifs()">
+            <option value="">TBT + SPS</option>
+            <option value="TBT">TBT فقط</option>
+            <option value="SPS">SPS فقط</option>
+          </select>
+          <select id="notif-status" onchange="filterNotifs()">
+            <option value="">كل الحالات</option>
+            <option value="open">مفتوح للتعليق</option>
+          </select>
+          <input id="notif-member" placeholder="الدولة المُخطِرة..." oninput="filterNotifs()" style="max-width:160px">
+          <button class="btn btn-secondary" onclick="filterNotifs()">تصفية</button>
+        </div>
+        <div class="two-col">
+          <div>
+            <div id="notif-list"><div class="empty-state"><div class="spinner"></div></div></div>
+            <div class="pager" id="notif-pager" style="display:none">
+              <button id="notif-prev" onclick="notifPage(-1)">→ السابق</button>
+              <span class="pager-info" id="notif-page-info">1/1</span>
+              <button id="notif-next" onclick="notifPage(1)">التالي ←</button>
+            </div>
+          </div>
+          <div>
+            <div id="notif-detail" class="detail-panel" style="min-height:200px">
+              <div class="empty-state"><div class="empty-icon">🔔</div><div>اختر إشعاراً للتفاصيل</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TARIFFS ══ -->
+      <div class="page" id="page-tariffs">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📊 التعريفات الجمركية MFN على المنتجات السعودية (2023)</div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th>المنتج</th><th>كود HS</th><th>🇨🇳 الصين</th><th>🇮🇳 الهند</th><th>🇪🇺 EU</th><th>🇺🇸 USA</th><th>🇯🇵 اليابان</th><th>أفضل سوق</th></tr></thead>
+              <tbody id="tariff-full-body"></tbody>
+            </table>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:12px;font-size:11px;color:var(--t3)">
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span>أقل من 5% — مناسب</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block"></span>5–10% — متوسط</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block"></span>أكثر من 10% — تحدي</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SEARCH ══ -->
+      <div class="page" id="page-search">
+        <div class="card">
+          <div class="card-header"><div class="card-title">🔍 بحث مباشر في WTO ePing</div></div>
+          <div class="filters">
+            <input id="s-text" placeholder="كلمة مفتاحية..." style="flex:2">
+            <input id="s-hs" placeholder="كود HS (مثال: 2709)" style="max-width:150px">
+            <input id="s-from" type="date" style="max-width:150px">
+            <input id="s-to" type="date" style="max-width:150px">
+            <button class="btn btn-primary" onclick="liveSearch()">بحث</button>
+          </div>
+          <div id="search-results"><div class="empty-state"><div class="empty-icon">🔍</div><div>اكتب مصطلح البحث واضغط "بحث"</div></div></div>
+        </div>
+      </div>
+
+      <!-- ══ SETTINGS ══ -->
+      <div class="page" id="page-settings">
+        <div class="card">
+          <div class="card-header"><div class="card-title">⚙️ إعدادات المنصة</div></div>
+          <div style="display:flex;flex-direction:column;gap:14px;max-width:500px">
+            <div>
+              <div style="font-size:12px;color:var(--t2);margin-bottom:6px">🔑 WTO API Key</div>
+              <input type="password" id="cfg-wto" placeholder="مفتاح من apiportal.wto.org" style="width:100%">
+              <div style="font-size:10px;color:var(--t3);margin-top:4px">سجّل مجاناً على <a href="https://apiportal.wto.org" target="_blank">apiportal.wto.org</a> — اشترك في: ePing + QRS + Time Series</div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--t2);margin-bottom:6px">🤖 Claude API Key</div>
+              <input type="password" id="cfg-claude" placeholder="sk-ant-..." style="width:100%">
+              <div style="font-size:10px;color:var(--t3);margin-top:4px">من <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></div>
+            </div>
+            <div id="health-info" class="detail-panel" style="font-size:12px"></div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary" onclick="checkHealth()">🔍 اختبار الاتصال</button>
+              <button class="btn btn-secondary" onclick="doRefresh()">🔄 تحديث البيانات</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+// ════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════
+var PAGE_TITLES = {dashboard:'لوحة التحكم',opportunities:'الفرص',notifications:'الإشعارات',tariffs:'التعريفات',search:'بحث WTO',settings:'الإعدادات'};
+var _notifs = [], _opps = [], _tariffs = [];
+var _notifPage = 1, _notifFiltered = [];
+var ROWS = 20;
+
+// ════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+  var pg = document.getElementById('page-'+id);
+  if(pg) pg.classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('page-title').textContent = PAGE_TITLES[id] || id;
+}
+
+// ════════════════════════════════════════════════════
+//  API CALLS
+// ════════════════════════════════════════════════════
+function api(path, cb) {
+  fetch(path)
+    .then(function(r){return r.json()})
+    .then(cb)
+    .catch(function(e){console.error(path, e)});
+}
+
+function loadAll() {
+  api('/api/stats', function(d) {
+    document.getElementById('m-notifs').textContent = (d.total_notifications||0).toLocaleString();
+    document.getElementById('m-open').textContent   = (d.open||0).toLocaleString();
+    document.getElementById('m-opps').textContent   = (d.total_opportunities||0).toLocaleString();
+    document.getElementById('notif-badge').textContent = d.total_notifications || '—';
+    document.getElementById('api-status').textContent  = '✅ متصل';
+    document.getElementById('api-status').className = 'badge badge-green';
+  });
+  api('/api/notifications?rows=200', function(d) {
+    _notifs = d.notifications || [];
+    renderDashNotifs();
+    filterNotifs();
+  });
+  api('/api/opportunities', function(d) {
+    _opps = d.opportunities || [];
+    renderDashOpps();
+    filterOpps();
+  });
+  api('/api/tariffs', function(d) {
+    _tariffs = d.tariffs || [];
+    renderTariffs();
+    renderDashTariffs();
+  });
+}
+
+function doRefresh() {
+  document.getElementById('api-status').innerHTML = '<div class="spinner"></div>';
+  fetch('/api/refresh', {method:'POST'})
+    .then(function(r){return r.json()})
+    .then(function(){loadAll()});
+}
+
+function checkHealth() {
+  api('/api/health', function(d) {
+    document.getElementById('health-info').innerHTML =
+      '<b>حالة المنصة:</b><br>' +
+      'إشعارات محفوظة: ' + d.notifications + '<br>' +
+      'فرص محفوظة: ' + d.opportunities + '<br>' +
+      'WTO API Key: ' + (d.wto_key ? '✅ موجود' : '❌ غير موجود') + '<br>' +
+      'Claude API Key: ' + (d.claude_key ? '✅ موجود' : '❌ غير موجود') + '<br>' +
+      'آخر تحديث: ' + (d.cached_at ? new Date(d.cached_at).toLocaleString('ar') : 'لم يتم بعد');
+  });
+}
+
+// ════════════════════════════════════════════════════
+//  DASHBOARD
+// ════════════════════════════════════════════════════
+function renderDashOpps() {
+  var top = _opps.slice(0,5);
+  if(!top.length){document.getElementById('dash-opps').innerHTML='<div class="empty-state"><div class="empty-icon">⭐</div><div>لا توجد فرص</div></div>';return}
+  var html = top.map(function(o){
+    var pr = o.priority==='حرج'?'badge-red':o.priority==='عالي'?'badge-amber':'badge-blue';
+    var sc = o.score>=80?'var(--green)':o.score>=60?'var(--amber)':'var(--red)';
+    return '<div class="list-item" onclick="showPage(\'opportunities\',document.querySelector(\'[onclick*=opportunities]\'));setTimeout(function(){selectOpp('+JSON.stringify(o)+')}),100)">'+
+      '<div class="item-top"><div class="item-title">'+o.title+'</div>'+
+      '<div style="display:flex;gap:4px"><span class="badge '+pr+'">'+o.priority+'</span><span class="badge badge-green">'+o.score+'</span></div></div>'+
+      '<div class="item-meta"><span>'+o.hs+'</span><span>·</span><span>'+o.agreement+'</span></div>'+
+      '<div class="score-bar"><div class="score-fill" style="width:'+o.score+'%;background:'+sc+'"></div></div></div>';
+  }).join('');
+  document.getElementById('dash-opps').innerHTML = html;
+}
+
+function renderDashNotifs() {
+  var top = _notifs.slice(0,5);
+  if(!top.length){document.getElementById('dash-notifs').innerHTML='<div class="empty-state"><div class="empty-icon">🔔</div><div>لا توجد إشعارات</div></div>';return}
+  var html = top.map(function(n){
+    var tc = n.type==='TBT'?'badge-tbt':'badge-sps';
+    var st = n.status==='مفتوح للتعليق'?'<span class="badge badge-amber">مفتوح</span>':'<span class="badge" style="background:rgba(110,118,129,.15);color:var(--t3)">منتهي</span>';
+    return '<div class="list-item" onclick="showPage(\'notifications\',document.querySelector(\'[onclick*=notifications]\'));setTimeout(function(){selectNotif('+JSON.stringify(n)+')}),100)">'+
+      '<div class="item-top"><div class="item-title" style="font-size:12px">'+n.title.substring(0,80)+'</div>'+
+      '<span class="badge '+tc+'">'+n.type+'</span></div>'+
+      '<div class="item-meta">'+st+'<span>'+n.member+'</span><span>·</span><span>'+n.date+'</span></div></div>';
+  }).join('');
+  document.getElementById('dash-notifs').innerHTML = html;
+}
+
+function renderDashTariffs() {
+  if(!_tariffs.length)return;
+  var html = _tariffs.map(function(t){
+    function cls(v){return v===0?'tbl-good':v<5?'tbl-good':v<10?'tbl-mid':'tbl-bad'}
+    function fmt(v){return v===0?'0%':v+'%'}
+    return '<tr><td>'+t.product+'</td><td><span class="badge badge-blue" style="font-size:10px">'+t.hs+'</span></td>'+
+      '<td class="'+cls(t.china)+'">'+fmt(t.china)+'</td>'+
+      '<td class="'+cls(t.india)+'">'+fmt(t.india)+'</td>'+
+      '<td class="'+cls(t.eu)+'">'+fmt(t.eu)+'</td>'+
+      '<td class="'+cls(t.usa)+'">'+fmt(t.usa)+'</td>'+
+      '<td class="'+cls(t.japan)+'">'+fmt(t.japan)+'</td></tr>';
+  }).join('');
+  document.getElementById('dash-tariff-body').innerHTML = html;
+}
+
+// ════════════════════════════════════════════════════
+//  OPPORTUNITIES
+// ════════════════════════════════════════════════════
+function filterOpps() {
+  var kw  = (document.getElementById('opp-search')||{value:''}).value.toLowerCase();
+  var ctr = (document.getElementById('opp-country')||{value:''}).value;
+  var pri = (document.getElementById('opp-priority')||{value:''}).value;
+  var data = _opps.filter(function(o){
+    return (!kw  || o.title.toLowerCase().includes(kw) || o.hs.includes(kw)) &&
+           (!ctr || o.country===ctr) &&
+           (!pri || o.priority===pri);
+  });
+  var html = data.map(function(o){
+    var pr = o.priority==='حرج'?'badge-red':o.priority==='عالي'?'badge-amber':'badge-blue';
+    var sc = o.score>=80?'var(--green)':o.score>=60?'var(--amber)':'var(--red)';
+    return '<div class="list-item" onclick="selectOpp('+JSON.stringify(o)+')">'+
+      '<div class="item-top"><div class="item-title">'+o.title+'</div>'+
+      '<div style="display:flex;gap:4px"><span class="badge '+pr+'">'+o.priority+'</span><span class="badge badge-green">'+o.score+'</span></div></div>'+
+      '<div class="item-meta"><span>HS: '+o.hs+'</span><span>·</span><span>'+o.agreement+'</span><span>·</span><span>'+o.type+'</span></div>'+
+      '<div class="score-bar"><div class="score-fill" style="width:'+o.score+'%;background:'+sc+'"></div></div></div>';
+  }).join('') || '<div class="empty-state"><div class="empty-icon">⭐</div><div>لا نتائج</div></div>';
+  document.getElementById('opp-list').innerHTML = html;
+}
+
+function selectOpp(o) {
+  document.getElementById('opp-detail').innerHTML =
+    '<h3>'+o.title+'</h3>'+
+    '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">'+
+      '<span class="badge badge-blue">HS: '+o.hs+'</span>'+
+      '<span class="badge badge-green">درجة: '+o.score+'/100</span>'+
+      '<span class="badge badge-amber">'+o.type+'</span>'+
+    '</div>'+
+    '<div style="margin-bottom:8px"><b>الدولة المستهدفة:</b> '+o.country+'</div>'+
+    '<div style="margin-bottom:8px"><b>الأساس القانوني:</b> '+o.agreement+'</div>'+
+    '<div style="margin-bottom:14px"><b>الأولوية:</b> '+o.priority+'</div>'+
+    '<button class="btn btn-ai" onclick="analyzeOpp('+JSON.stringify(o)+')">🤖 تحليل بالذكاء الاصطناعي</button>'+
+    '<div id="opp-ai" style="margin-top:12px"></div>';
+}
+
+function analyzeOpp(o) {
+  document.getElementById('opp-ai').innerHTML = '<div class="spinner"></div> جاري التحليل...';
+  fetch('/api/analyze-opportunity', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(o)
+  }).then(function(r){return r.json()}).then(function(d){
+    document.getElementById('opp-ai').innerHTML = d.analysis ?
+      '<div class="detail-panel ai-output">'+d.analysis+'</div>' :
+      '<div style="color:var(--red)">'+( d.error||'خطأ في التحليل')+'</div>';
+  }).catch(function(){document.getElementById('opp-ai').innerHTML='<div style="color:var(--red)">تعذّر الاتصال</div>'});
+}
+
+// ════════════════════════════════════════════════════
+//  NOTIFICATIONS
+// ════════════════════════════════════════════════════
+function filterNotifs() {
+  var kw = (document.getElementById('notif-search')||{value:''}).value.toLowerCase();
+  var tp = (document.getElementById('notif-type')||{value:''}).value;
+  var st = (document.getElementById('notif-status')||{value:''}).value;
+  var mb = (document.getElementById('notif-member')||{value:''}).value.toLowerCase();
+  _notifFiltered = _notifs.filter(function(n){
+    return (!kw || n.title.toLowerCase().includes(kw) || n.symbol.toLowerCase().includes(kw)) &&
+           (!tp || n.type===tp) &&
+           (!st || n.status==='مفتوح للتعليق') &&
+           (!mb || n.member.toLowerCase().includes(mb));
+  });
+  _notifPage = 1;
+  renderNotifPage();
+}
+
+function renderNotifPage() {
+  var total = _notifFiltered.length;
+  var pages = Math.max(1, Math.ceil(total/ROWS));
+  var start = (_notifPage-1)*ROWS;
+  var slice = _notifFiltered.slice(start, start+ROWS);
+  var html = slice.map(function(n){
+    var tc = n.type==='TBT'?'badge-tbt':'badge-sps';
+    var st = n.status==='مفتوح للتعليق'?'<span class="badge badge-amber">مفتوح</span>':'<span class="badge" style="background:rgba(110,118,129,.15);color:var(--t3)">منتهي</span>';
+    return '<div class="list-item" onclick="selectNotif('+JSON.stringify(n)+')">'+
+      '<div class="item-top"><div class="item-title" style="font-size:12px">'+n.title.substring(0,90)+'</div>'+
+      '<span class="badge '+tc+'">'+n.type+'</span></div>'+
+      '<div class="item-meta">'+st+'<span>'+n.member+'</span><span>·</span><span>'+n.date+'</span>'+
+      (n.saudiMatch&&n.saudiMatch.length?'<span class="badge badge-amber" style="font-size:9px">🇸🇦 صلة بالسعودية</span>':'')+
+      '</div></div>';
+  }).join('') || '<div class="empty-state"><div class="empty-icon">🔔</div><div>لا نتائج</div></div>';
+  document.getElementById('notif-list').innerHTML = html;
+  var pager = document.getElementById('notif-pager');
+  if(total>ROWS){
+    pager.style.display='flex';
+    document.getElementById('notif-page-info').textContent = _notifPage+'/'+pages+' ('+total+' إشعار)';
+    document.getElementById('notif-prev').disabled = _notifPage<=1;
+    document.getElementById('notif-next').disabled = _notifPage>=pages;
+  } else {
+    pager.style.display='none';
+  }
+}
+
+function notifPage(dir) {
+  var pages = Math.max(1, Math.ceil(_notifFiltered.length/ROWS));
+  _notifPage = Math.max(1, Math.min(pages, _notifPage+dir));
+  renderNotifPage();
+}
+
+function selectNotif(n) {
+  var docsHtml = (n.docs||[]).map(function(d){
+    return '<a href="'+d.url+'" target="_blank" class="btn btn-secondary" style="font-size:11px;padding:4px 10px;display:inline-block;margin:3px">📄 '+d.name+'</a>';
+  }).join('');
+  document.getElementById('notif-detail').innerHTML =
+    '<h3>'+n.title.substring(0,100)+'</h3>'+
+    '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">'+
+      '<span class="badge '+(n.type==='TBT'?'badge-tbt':'badge-sps')+'">'+n.type+'</span>'+
+      '<span class="badge '+(n.status==='مفتوح للتعليق'?'badge-amber':'')+'">'+n.status+'</span>'+
+    '</div>'+
+    '<div style="margin-bottom:6px"><b>الرمز:</b> '+n.symbol+'</div>'+
+    '<div style="margin-bottom:6px"><b>الدولة:</b> '+n.member+'</div>'+
+    '<div style="margin-bottom:6px"><b>التاريخ:</b> '+n.date+'</div>'+
+    (n.commentDeadline?'<div style="margin-bottom:6px"><b>موعد التعليق:</b> <span style="color:var(--amber)">'+n.commentDeadline+'</span></div>':'')+
+    (n.products&&n.products.length?'<div style="margin-bottom:6px"><b>المنتجات:</b> '+n.products.join('، ')+'</div>':'')+
+    (n.saudiMatch&&n.saudiMatch.length?'<div style="margin-bottom:10px"><span class="badge badge-amber">🇸🇦 منتجات سعودية متأثرة: '+n.saudiMatch.map(function(s){return s.name}).join('، ')+'</span></div>':'')+
+    (docsHtml?'<div style="margin-bottom:10px">'+docsHtml+'</div>':'')+
+    (n.epingLink?'<a href="'+n.epingLink+'" target="_blank" class="btn btn-secondary" style="font-size:11px;display:inline-block;margin-bottom:12px">🔗 فتح في ePing</a><br>':'')+
+    '<button class="btn btn-ai" onclick="analyzeNotif('+JSON.stringify(n)+')">🤖 تحليل قانوني</button>'+
+    '<div id="notif-ai" style="margin-top:12px"></div>';
+}
+
+function analyzeNotif(n) {
+  document.getElementById('notif-ai').innerHTML = '<div class="spinner"></div> جاري التحليل...';
+  fetch('/api/analyze', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(n)
+  }).then(function(r){return r.json()}).then(function(d){
+    document.getElementById('notif-ai').innerHTML = d.analysis ?
+      '<div class="detail-panel ai-output">'+d.analysis+'</div>' :
+      '<div style="color:var(--red)">'+(d.error||'تعذّر التحليل — تحقق من Claude API Key')+'</div>';
+  }).catch(function(){document.getElementById('notif-ai').innerHTML='<div style="color:var(--red)">تعذّر الاتصال</div>'});
+}
+
+// ════════════════════════════════════════════════════
+//  TARIFFS
+// ════════════════════════════════════════════════════
+function renderTariffs() {
+  if(!_tariffs.length)return;
+  var html = _tariffs.map(function(t){
+    var vals = [t.china,t.india,t.eu,t.usa,t.japan];
+    var names = ['الصين','الهند','EU','USA','اليابان'];
+    var minVal = Math.min.apply(null, vals);
+    var best = names[vals.indexOf(minVal)];
+    function cls(v){return v===0||v<5?'tbl-good':v<10?'tbl-mid':'tbl-bad'}
+    function fmt(v){return v===0?'0%':v+'%'}
+    return '<tr><td>'+t.product+'</td><td><span class="badge badge-blue" style="font-size:10px">'+t.hs+'</span></td>'+
+      '<td class="'+cls(t.china)+'">'+fmt(t.china)+'</td>'+
+      '<td class="'+cls(t.india)+'">'+fmt(t.india)+'</td>'+
+      '<td class="'+cls(t.eu)+'">'+fmt(t.eu)+'</td>'+
+      '<td class="'+cls(t.usa)+'">'+fmt(t.usa)+'</td>'+
+      '<td class="'+cls(t.japan)+'">'+fmt(t.japan)+'</td>'+
+      '<td><span class="badge badge-green" style="font-size:10px">'+best+'</span></td></tr>';
+  }).join('');
+  document.getElementById('tariff-full-body').innerHTML = html;
+}
+
+// ════════════════════════════════════════════════════
+//  LIVE SEARCH
+// ════════════════════════════════════════════════════
+function liveSearch() {
+  var txt  = document.getElementById('s-text').value;
+  var hs   = document.getElementById('s-hs').value;
+  var from = document.getElementById('s-from').value;
+  var to   = document.getElementById('s-to').value;
+  if(!txt&&!hs&&!from){
+    document.getElementById('search-results').innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div><div>أدخل مصطلح بحث</div></div>';
+    return;
+  }
+  document.getElementById('search-results').innerHTML='<div class="empty-state"><div class="spinner"></div></div>';
+  var params = new URLSearchParams();
+  if(txt) params.set('freeText', txt);
+  if(hs)  params.set('hs', hs);
+  if(from) params.set('distributionDateFrom', from);
+  if(to)   params.set('distributionDateTo', to);
+  fetch('/api/wto/live-search?'+params.toString())
+    .then(function(r){return r.json()})
+    .then(function(d){
+      var notifs = d.notifications || [];
+      if(!notifs.length){
+        document.getElementById('search-results').innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div><div>لا نتائج</div></div>';
+        return;
+      }
+      var html = '<div style="color:var(--t3);font-size:12px;margin-bottom:10px">'+notifs.length+' نتيجة</div>'+
+        notifs.map(function(n){
+          var tc = n.type==='TBT'?'badge-tbt':'badge-sps';
+          return '<div class="list-item" onclick="selectNotif('+JSON.stringify(n)+');showPage(\'notifications\',document.querySelector(\'[onclick*=notifications]\'))">'+
+            '<div class="item-top"><div class="item-title" style="font-size:12px">'+n.title.substring(0,100)+'</div>'+
+            '<span class="badge '+tc+'">'+n.type+'</span></div>'+
+            '<div class="item-meta"><span>'+n.member+'</span><span>·</span><span>'+n.date+'</span></div></div>';
+        }).join('');
+      document.getElementById('search-results').innerHTML = html;
+    })
+    .catch(function(){
+      document.getElementById('search-results').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div>خطأ في الاتصال — تحقق من WTO API Key</div></div>';
+    });
+}
+
+// ════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════
+loadAll();
+</script>
+</body>
+</html>
